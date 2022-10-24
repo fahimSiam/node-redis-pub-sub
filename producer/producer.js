@@ -6,8 +6,8 @@ const port = 3001;
 
 const publisher = redis.createClient({
   socket: {
+    host: "127.0.0.1",
     port: 6379,
-    host: "172.20.0.68",
   },
 });
 (async () => {
@@ -19,13 +19,13 @@ app.get("/", (req, res) => {
 
 app.get("/publish", async (req, res) => {
   try {
-    await publisher.connect();
+    //await publisher.connect();
     const id = Math.floor(Math.random() * 11);
     const product = {
       id: id,
       name: "Product " + id,
     };
-    publisher.publish("product", JSON.stringify(product));
+    publisher.publish("products", JSON.stringify(product));
     res.send("product published!");
   } catch (e) {
     console.log(e);
